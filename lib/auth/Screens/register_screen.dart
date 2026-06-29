@@ -1,114 +1,155 @@
+// register_screen.dart
 import 'package:flutter/material.dart';
-import '../../core/utils/validators.dart';
+import 'StyleSheet/register_screen.dart';
 
-class RegisterScreen extends StatefulWidget {
+class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
-
-  @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
-}
-
-class _RegisterScreenState extends State<RegisterScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  String _selectedRole = 'Consumer'; // Tracks account user role splits
-
-  void _handleRegister() {
-    if (_formKey.currentState!.validate()) {
-      // Input details confirmed! Redirecting layout flow
-      Navigator.pushReplacementNamed(context, '/home');
-    }
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Create Account')),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Text(
-                'Join the Marketplace',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
+      // 1. Scaffold ko transparent kiya taake container ka gradient nazar aaye
+      backgroundColor: Colors.transparent,
+
+      // 2. Poori body ko Container mian wrap kar ke gradient lagaya
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: AuthStyles.backgroundGradient, // 👈 Hamara premium gradient
+        ),
+        child: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 32.0,
+                vertical: 24.0,
               ),
-              const SizedBox(height: 24),
-              TextFormField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Full Name',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.person_outline),
-                ),
-                validator: Validators.validateName,
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email Address',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.email_outlined),
-                ),
-                keyboardType: TextInputType.emailAddress,
-                validator: Validators.validateEmail,
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _passwordController,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.lock_outline),
-                ),
-                obscureText: true,
-                validator: Validators.validatePassword,
-              ),
-              const SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                value: _selectedRole,
-                decoration: const InputDecoration(
-                  labelText: 'Register As',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.assignment_ind_outlined),
-                ),
-                items: const [
-                  DropdownMenuItem(value: 'Consumer', child: Text('Consumer')),
-                  DropdownMenuItem(
-                    value: 'Provider',
-                    child: Text('Service Provider'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Minimalist Visual Element (Optional Accent Icon Top Block)
+                  Center(
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: const BoxDecoration(
+                        color: AuthStyles.primaryLight,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.bolt,
+                        color: AuthStyles.primaryColor,
+                        size: 32,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Header Group
+                  const Text(
+                    'Register account',
+                    style: AuthStyles.mainTitle,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'Join us today and enjoy seamless access.',
+                    style: AuthStyles.subtitle,
+                    textAlign: TextAlign.center,
+                  ),
+
+                  const SizedBox(height: 40),
+
+                  // Full Name Field (With Container for Floating Shadow Effect)
+                  Container(
+                    decoration: AuthStyles.inputShadowDecoration,
+                    child: TextField(
+                      decoration: AuthStyles.premiumInput(
+                        label: 'Full Name',
+                        icon: Icons.person_outline_rounded,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+
+                  // Email Field
+                  Container(
+                    decoration: AuthStyles.inputShadowDecoration,
+                    child: TextField(
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: AuthStyles.premiumInput(
+                        label: 'Email Address',
+                        icon: Icons.mail_outline_rounded,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+
+                  // Password Field
+                  Container(
+                    decoration: AuthStyles.inputShadowDecoration,
+                    child: TextField(
+                      obscureText: true,
+                      decoration: AuthStyles.premiumInput(
+                        label: 'Password',
+                        icon: Icons.lock_open_rounded,
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 32),
+
+                  // Upgraded Action Button with Wrapper Shadow
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AuthStyles.primaryColor.withValues(alpha: 0.3),
+                          blurRadius: 24,
+                          offset: const Offset(0, 10),
+                        ),
+                      ],
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: AuthStyles.premiumButton,
+                      child: const Text(
+                        'Create Account',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.2,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 36),
+
+                  // Clean Footer Link Section
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Already have an account? ',
+                        style: TextStyle(
+                          color: AuthStyles.textMuted,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.pushNamed(context, '/login'),
+                        child: const Text(
+                          'Sign In',
+                          style: AuthStyles.linkText,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
-                onChanged: (value) {
-                  setState(() {
-                    _selectedRole = value!;
-                  });
-                },
               ),
-              const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: _handleRegister,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                ),
-                child: const Text('Sign Up', style: TextStyle(fontSize: 16)),
-              ),
-            ],
+            ),
           ),
         ),
       ),

@@ -1,4 +1,6 @@
 class Validators {
+  static final RegExp _emailRegExp = RegExp(r'^[\w\.\-]+@[\w\-]+\.[\w\-]{2,}$');
+
   static String? validateName(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your full name';
@@ -10,7 +12,7 @@ class Validators {
     if (value == null || value.isEmpty) {
       return 'Please enter your email';
     }
-    if (!value.contains('@gmail.com')) {
+    if (!_emailRegExp.hasMatch(value)) {
       return 'Please enter a valid email address';
     }
     return null;
