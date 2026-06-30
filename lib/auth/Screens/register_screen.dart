@@ -111,7 +111,9 @@ class RegisterScreen extends StatelessWidget {
                       ],
                     ),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/home');
+                      },
                       style: AuthStyles.premiumButton,
                       child: const Text(
                         'Create Account',
