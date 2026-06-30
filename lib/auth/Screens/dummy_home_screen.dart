@@ -1,248 +1,375 @@
 import 'package:flutter/material.dart';
-// Note: Apne project ke mutabiq AuthStyles ka sahi path import karein
-import 'StyleSheet/register_screen.dart';
+import 'StyleSheet/app_styles.dart';
 
-class DummyHomeScreen extends StatelessWidget {
-  const DummyHomeScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
-  // Dummy data array for services
   final List<Map<String, dynamic>> services = const [
     {
-      'name': 'Home Cleaning',
+      'name': 'Cleaning',
       'icon': Icons.cleaning_services_rounded,
-      'color': Color(0xFF3B82F6),
+      'color': AppStyles.accentBlue,
     },
     {
       'name': 'Plumbing',
       'icon': Icons.plumbing_rounded,
-      'color': Color(0xFFEF4444),
+      'color': AppStyles.accentTeal,
     },
     {
-      'name': 'Electrician',
+      'name': 'Electrical',
       'icon': Icons.electrical_services_rounded,
-      'color': Color(0xFFF59E0B),
+      'color': AppStyles.accentOrange,
     },
     {
-      'name': 'Appliance Repair',
+      'name': 'Repair',
       'icon': Icons.home_repair_service_rounded,
-      'color': Color(0xFF10B981),
+      'color': AppStyles.accentGreen,
     },
     {
       'name': 'Pest Control',
       'icon': Icons.bug_report_rounded,
-      'color': Color(0xFF6366F1),
+      'color': AppStyles.accentRed,
     },
     {
-      'name': 'Home Painting',
+      'name': 'Painting',
       'icon': Icons.format_paint_rounded,
-      'color': Color(0xFFEC4899),
+      'color': AppStyles.accentPink,
     },
     {
       'name': 'Gardening',
       'icon': Icons.local_florist_rounded,
-      'color': Color(0xFF84CC16),
+      'color': AppStyles.accentPurple,
     },
     {
       'name': 'Carpentry',
       'icon': Icons.carpenter_rounded,
-      'color': Color(0xFF14B8A6),
+      'color': AppStyles.accentOrange,
     },
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AuthStyles.surfaceWhite,
+      backgroundColor: AppStyles.surfaceWhite,
 
-      // 1. Customized AppBar
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        title: const Text(
-          'OrderServices',
-          style: TextStyle(
-            color: AuthStyles.textDark,
-            fontWeight: FontWeight.w800,
-            fontSize: 18,
-            letterSpacing: -0.5,
-          ),
-        ),
-        actions: [
-          // Dummy Search Bar
-          Container(
-            width: 180,
-            height: 40,
-            margin: const EdgeInsets.only(right: 8),
-            child: TextField(
-              enabled: false, // Dummy functionality
-              decoration: InputDecoration(
-                hintText: 'Search...',
-                hintStyle: const TextStyle(
-                  color: AuthStyles.textMuted,
-                  fontSize: 13,
-                ),
-                prefixIcon: const Icon(
-                  Icons.search,
-                  color: AuthStyles.textMuted,
-                  size: 18,
-                ),
-                filled: true,
-                fillColor: AuthStyles.surfaceWhite,
-                contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-          // Account Settings Button
-          IconButton(
-            icon: const Icon(
-              Icons.manage_accounts_rounded,
-              color: AuthStyles.primaryColor,
-            ),
-            onPressed: () {
-              // Action for account settings (Dummy for now)
-            },
-          ),
-          const SizedBox(width: 8),
-        ],
-      ),
-
-      // 2. Grid Body
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: AuthStyles.backgroundGradient,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 4, bottom: 16),
-                child: Text(
-                  'Services',
-                  style: TextStyle(
-                    color: AuthStyles.textDark,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: -0.2,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: GridView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // 2 items per row
-                    crossAxisSpacing: 14,
-                    mainAxisSpacing: 14,
-                    childAspectRatio: 1.1, // Card layout aspect ratio
-                  ),
-                  itemCount: services.length,
-                  itemBuilder: (context, index) {
-                    final service = services[index];
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AuthStyles.textDark.withOpacity(0.04),
-                            blurRadius: 16,
-                            offset: const Offset(0, 6),
-                          ),
-                        ],
-                      ),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(20),
-                          onTap: () {
-                            // Service click logic here
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Icon with a soft background circle
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    color: (service['color'] as Color)
-                                        .withOpacity(0.1),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    service['icon'] as IconData,
-                                    color: service['color'] as Color,
-                                    size: 28,
-                                  ),
-                                ),
-                                const Spacer(),
-                                // Service Name
-                                Text(
-                                  service['name'] as String,
-                                  style: const TextStyle(
-                                    color: AuthStyles.textDark,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    letterSpacing: -0.3,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                const SizedBox(height: 4),
-                                const Text(
-                                  'Book Now',
-                                  style: TextStyle(
-                                    color: AuthStyles.primaryColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
+      // ===== PROFESSIONAL APP BAR =====
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.03),
+                blurRadius: 20,
+                offset: const Offset(0, 2),
               ),
             ],
           ),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  // Logo / Brand Name
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      gradient: AppStyles.buttonGradient,
+                      borderRadius: AppStyles.radiusSmall,
+                    ),
+                    child: const Text(
+                      'OS',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.5,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  const Text(
+                    'OrderServices',
+                    style: TextStyle(
+                      color: AppStyles.textDark,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: -0.3,
+                    ),
+                  ),
+                  const Spacer(),
+
+                  // Search Bar - Dummy
+                  Container(
+                    width: 160,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      color: AppStyles.surfaceWhite,
+                      borderRadius: AppStyles.radiusCircular,
+                      border: Border.all(
+                        color: AppStyles.textLight.withOpacity(0.15),
+                        width: 1,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 12),
+                        Icon(
+                          Icons.search_rounded,
+                          color: AppStyles.textLight,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          'Search...',
+                          style: AppStyles.bodySmall.copyWith(
+                            color: AppStyles.textLight,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        const Spacer(),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          margin: const EdgeInsets.only(right: 4),
+                          decoration: BoxDecoration(
+                            color: AppStyles.textLight.withOpacity(0.1),
+                            borderRadius: AppStyles.radiusSmall,
+                          ),
+                          child: Text(
+                            '⌘K',
+                            style: AppStyles.caption.copyWith(
+                              color: AppStyles.textLight,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+
+                  // Profile/Account Button
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: AppStyles.buttonGradient,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppStyles.primaryColor.withOpacity(0.15),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {},
+                        borderRadius: AppStyles.radiusCircular,
+                        child: Container(
+                          width: 36,
+                          height: 36,
+                          alignment: Alignment.center,
+                          child: const Icon(
+                            Icons.person_rounded,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
 
-      // 3. Fixed Bottom Right Plus (+) Button
-      floatingActionButton: Container(
-        decoration: BoxDecoration(
-          gradient: AuthStyles
-              .buttonGradient, // Applying auth styles premium gradient
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: AuthStyles.primaryColor.withOpacity(0.4),
-              blurRadius: 16,
-              offset: const Offset(0, 6),
+      // ===== BODY =====
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header with stats
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Available Services',
+                        style: AppStyles.headingSmall.copyWith(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '8 services ready for you',
+                        style: AppStyles.bodyMedium.copyWith(
+                          color: AppStyles.textLight,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppStyles.primaryColor.withOpacity(0.08),
+                      borderRadius: AppStyles.radiusCircular,
+                    ),
+                    child: Text(
+                      'All',
+                      style: AppStyles.bodyMedium.copyWith(
+                        color: AppStyles.primaryColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
+            const SizedBox(height: 12),
+
+            // Grid
+            Expanded(
+              child: GridView.builder(
+                physics: const BouncingScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 14,
+                  mainAxisSpacing: 14,
+                  childAspectRatio: 1.0,
+                ),
+                itemCount: services.length,
+                itemBuilder: (context, index) {
+                  final service = services[index];
+                  return _ServiceCard(service: service, onTap: () {});
+                },
+              ),
+            ),
+            const SizedBox(height: 16),
           ],
         ),
+      ),
+
+      // ===== FLOATING ACTION BUTTON =====
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          gradient: AppStyles.buttonGradient,
+          shape: BoxShape.circle,
+          boxShadow: AppStyles.buttonShadow,
+        ),
         child: FloatingActionButton(
-          onPressed: () {
-            // Dummy logic for plus action
-          },
-          backgroundColor:
-              Colors.transparent, // transparent kiya taake gradient dikhe
+          onPressed: () {},
+          backgroundColor: Colors.transparent,
           elevation: 0,
           highlightElevation: 0,
           child: const Icon(Icons.add_rounded, color: Colors.white, size: 28),
+        ),
+      ),
+    );
+  }
+}
+
+// ===== SERVICE CARD WIDGET =====
+class _ServiceCard extends StatelessWidget {
+  final Map<String, dynamic> service;
+  final VoidCallback onTap;
+
+  const _ServiceCard({required this.service, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: AppStyles.radiusLarge,
+        boxShadow: AppStyles.cardShadow,
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: AppStyles.radiusLarge,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Icon Container
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: (service['color'] as Color).withOpacity(0.08),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: (service['color'] as Color).withOpacity(0.15),
+                      width: 1,
+                    ),
+                  ),
+                  child: Icon(
+                    service['icon'] as IconData,
+                    color: service['color'] as Color,
+                    size: 30,
+                  ),
+                ),
+                const SizedBox(height: 14),
+                // Service Name
+                Text(
+                  service['name'] as String,
+                  style: AppStyles.bodyLarge.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: AppStyles.textDark,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 6),
+                // Book Now Button
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppStyles.primaryColor.withOpacity(0.06),
+                    borderRadius: AppStyles.radiusCircular,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Book Now',
+                        style: AppStyles.bodySmall.copyWith(
+                          color: AppStyles.primaryColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Icon(
+                        Icons.arrow_forward_rounded,
+                        color: AppStyles.primaryColor,
+                        size: 12,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
